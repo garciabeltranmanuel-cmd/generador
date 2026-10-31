@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Código QR</title>
+    <!-- Cargamos la fuente Montserrat para mantener la misma tipografía del proyecto anterior -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    
+    <!-- Librería externa oficial y gratuita para generar códigos QR limpios sin caducidad -->
+    <script src="https://cloudflare.com"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f7f9fa;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .qr-container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            max-width: 90%;
+            width: 320px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            font-size: 16px;
+            color: #333333;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        /* Contenedor que centra el QR generado */
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            padding: 10px;
+            background: #ffffff;
+        }
+
+        /* Asegura que la imagen generada por la librería sea responsiva en celulares */
+        #qrcode img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="qr-container">
+    <h2>Código QR de Validación</h2>
+    
+    <!-- Aquí es donde la librería va a pintar el código QR de forma automática -->
+    <div id="qrcode"></div>
+</div>
+
+<script>
+    // ==========================================
+    // CAMBIA AQUÍ TU DIRECCIÓN URL:
+    // Solo edita el texto entre las comillas de abajo para actualizar el QR
+    // ==========================================
+    const urlDestino = "https://siat.sat.gob.mx/app/qr/faces/pages/mobile/validadorqr.jsf?D1=10&D2=1&D3=21050206820_GABM9210072D3";
+
+    // Inicialización y renderizado del código QR idéntico
+    const qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: urlDestino,
+        width: 256,          // Tamaño del QR en píxeles (óptimo para pantallas y lectura rápida)
+        height: 256,         // Alto idéntico
+        colorDark : "#000000", // Color de los módulos (Negro puro)
+        colorLight : "#ffffff", // Color de fondo (Blanco puro)
+        correctLevel : QRCode.CorrectLevel.H // Nivel de corrección Alto (Permite que se lea perfecto aunque la pantalla tenga brillo)
+    });
+</script>
+
+</body>
+</html>
