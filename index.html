@@ -6,9 +6,6 @@
     <title>Generador de Código QR</title>
     <!-- Cargamos la fuente Montserrat para mantener el diseño del proyecto anterior -->
     <link href="https://googleapis.com" rel="stylesheet">
-    
-    <!-- Librería de generación local y segura -->
-    <script src="https://cloudflare.com"></script>
 
     <style>
         body {
@@ -173,8 +170,6 @@
 </div>
 
 <script>
-    let qrcodeInstance = null;
-
     function generarQR() {
         const urlText = document.getElementById("urlInput").value.trim();
         const qrDiv = document.getElementById("qrcode");
@@ -187,7 +182,7 @@
             return;
         }
 
-        // Reseteamos el contenedor y apagamos el LED un momento para simular proceso
+        // Reseteamos y ponemos en procesando un instante
         qrDiv.innerHTML = "";
         ledLight.classList.remove("led-active");
         ledText.classList.remove("text-active");
@@ -195,32 +190,28 @@
         pdfBtn.style.display = "none";
 
         setTimeout(() => {
-            // Generación interna pura que no se bloquea en servidores HTTPS
-            qrcodeInstance = new QRCode(qrDiv, {
-                text: urlText,
-                width: 250,
-                height: 250,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
+            // Creamos la imagen usando un generador de QR directo por URL certificado por HTTPS
+            const qrImg = document.createElement("img");
+            qrImg.crossOrigin = "anonymous";
+            qrImg.src = "https://qrserver.com" + encodeURIComponent(urlText);
+            qrImg.alt = "Código QR Dinámico";
 
-            // Encendemos el LED en verde al finalizar con éxito
-            ledLight.classList.add("led-active");
-            ledText.classList.add("text-active");
-            ledText.innerText = "¡QR GENERADO EXITOSAMENTE!";
-            
-            // Habilitamos el botón de PDF
-            pdfBtn.style.display = "block";
-        }, 200);
+            // Cuando la imagen cargue con éxito, encendemos el LED y activamos los botones
+            qrImg.onload = function() {
+                ledLight.classList.add("led-active");
+                ledText.classList.add("text-active");
+                ledText.innerText = "¡QR GENERADO EXITOSAMENTE!";
+                pdfBtn.style.display = "block";
+            };
+
+            qrDiv.appendChild(qrImg);
+        }, 100);
     }
 
-    // Función para abrir el QR limpio en una ventana nueva y lanzar el guardado a PDF
     function abrirVentanaPDF() {
         const qrImg = document.getElementById("qrcode").querySelector("img");
         if (!qrImg) return;
 
-        // Abrimos la nueva ventana independiente que solicitaste
         const ventanaPDF = window.open("", "_blank", "width=600,height=600");
         
         ventanaPDF.document.write(`
@@ -236,7 +227,6 @@
                         align-items: center;
                         height: 100vh;
                         font-family: sans-serif;
-                        background: #ffffff;
                     }
                     img {
                         width: 300px;
@@ -247,21 +237,17 @@
                         font-size: 14px;
                         color: #666;
                     }
-                    /* Oculta las instrucciones en la hoja impresa final */
-                    @media print {
-                        p { display: none; }
-                    }
+                    @media print { p { display: none; } }
                 </style>
             </head>
             <body>
                 <img src="${qrImg.src}" />
                 <p>Preparando documento... Si no abre automático, presiona Ctrl+P (o Cmd+P)</p>
                 <script>
-                    // Dispara el diálogo nativo para guardar como PDF en celular o PC
                     setTimeout(() => {
                         window.print();
                         window.close();
-                    }, 300);
+                    }, 400);
                 <\/script>
             </body>
             </html>
@@ -269,7 +255,7 @@
         ventanaPDF.document.close();
     }
 
-    // Inicialización automática
+    // Inicialización automática al cargar
     window.onload = function() {
         generarQR();
     };
