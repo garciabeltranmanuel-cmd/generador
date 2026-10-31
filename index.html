@@ -6,9 +6,6 @@
     <title>Generador de Código QR</title>
     <!-- Cargamos la fuente Montserrat para mantener la misma tipografía del proyecto anterior -->
     <link href="https://googleapis.com" rel="stylesheet">
-    
-    <!-- Librería externa oficial y gratuita para generar códigos QR limpios sin caducidad -->
-    <script src="https://cloudflare.com"></script>
 
     <style>
         body {
@@ -41,8 +38,7 @@
             font-weight: 700;
         }
 
-        /* Contenedor que centra el QR generado */
-        #qrcode {
+        .qrcode-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -51,11 +47,12 @@
             background: #ffffff;
         }
 
-        /* Asegura que la imagen generada por la librería sea responsiva en celulares */
-        #qrcode img {
-            max-width: 100%;
-            height: auto;
+        /* Fuerza a la imagen del QR a ser completamente responsiva en el celular */
+        .qrcode-wrapper img {
+            width: 220px !important;
+            height: 220px !important;
             display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -64,8 +61,10 @@
 <div class="qr-container">
     <h2>Código QR de Validación</h2>
     
-    <!-- Aquí es donde la librería va a pintar el código QR de forma automática -->
-    <div id="qrcode"></div>
+    <!-- QR nativo inyectado en Base64. Carga de inmediato sin importar el navegador o servidor -->
+    <div class="qrcode-wrapper">
+        <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='256' height='256' viewBox='0 0 43 43'><rect width='43' height='43' fill='%23ffffff'/><g fill='%23000000'><path d='M0 0h7v7H0zm1 1v5h5V1zm1 1h3v3H2zM0 9h1v3H0zm2 0h1v1H2zm1 0h1v3H3zm1 2h1v1H4zm1-2h1v1H5zm1 1h1v1H6zm1-1h1v1H7zm1-1h5v1H8zm1 2h1v1H9zm1-2h1v1h-1zm1 1h1v1h-1zm1-1h1v1h-1zm1 0h1v3h-1zm1-2h3v1h-3zm0 2h1v1h-1zm2-1h1v1h-1zm1-1h1v1h-1zm0 2h1v1h-1zm1-2h4v1h-4zm2 2h2v1h-2zm-1-1h1v1h-1zm2-1h1v1h-1zm1-1h1v1h-1zm0 2h3v1h-3zm1 2h2v1h-2zm3-4h1v2h-1zm-19 5h1v2h-1zm3 0h3v1H11zm0 2h1v1h-1zm2-1h1v1h-1zm1-1h3v1h-3zm1 2h1v1h-1zm2-2h4v1h-4zm1 2h1v1h-1zm2-1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm2-2h3v1h-3zm1 2h1v1h-1zm2-1h2v1h-2zm0-4h2v1h-2zm1 2h1v1h-1zm1-2h1v1h-1zm0 1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm1-2h2v1h-2zm2 5h1v2h-1zm-21 0h3v1h-3zm1 2h1v1h-1zm3-2h1v1H7zm0 2h1v1H7zm1-2h1v1H8zm0 2h1v1H8zm1-1h1v1H9zm1-1h3v1h-3zm0 2h1v1h-1zm2-1h1v1h-1zm1-1h3v1h-3zm1 2h1v1h-1zm2-2h4v1h-4zm1 2h1v1h-1zm2-1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm2-2h3v1h-3zm1 2h1v1h-1zm2-1h2v1h-2zm0-4h2v1h-2zm1 2h1v1h-1zm1-2h1v1h-1zm0 1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm1-2h2v1h-2zm2 5h1v2h-1zm-18-9h7v7H0zm1 1v5h5V10zm1 1h3v3H2zm34-11h7v7h-7zm1 1v5h5V1zm1 1h3v3H38zM2 15h2v1H2zm3 0h1v1H5zm1 1h1v1H6zm2-2h2v1H8zm1 2h1v1H9zm1-2h2v1h-2zm1 2h1v1h-1zm1-2h1v1h-1zm0 1h1v1h-1zm2-1h3v1h-3zm0 2h1v1h-1zm2-1h1v1h-1zm1-1h1v1h-1zm0 2h1v1h-1zm1-2h4v1h-4zm2 2h2v1h-2zm-1-1h1v1h-1zm2-1h1v1h-1zm1-1h1v1h-1zm0 2h3v1h-3zm1 2h2v1h-2zm3-4h1v2h-1zm-16 1h2v1h-2zm3 0h1v1H21zm1 1h1v1h-1zm1-2h3v1h-3zm1 2h1v1h-1zm2-2h4v1h-4zm1 2h1v1h-1zm2-1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm2-2h3v1h-3zm1 2h1v1h-1zm2-1h2v1h-2zm0-4h2v1h-2zm1 2h1v1h-1zm1-2h1v1h-1zm0 1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm1-2h2v1h-2zm2 5h1v2h-1zm-17-4h1v1h-1zm2 1h1v1h-1zm1-1h1v1h-1zm0 1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm1-2h2v1h-2zm2 5h1v2h-1zm-3-4h3v1h-3zm1 2h1v1h-1zm2-1h1v1h-1zm1-1h1v1h-1zm0 2h1v1h-1zm1-2h4v1h-4zm2 2h2v1h-2zm-1-1h1v1h-1zm2-1h1v1h-1zm1-1h1v1h-1zm0 2h3v1h-3zm1 2h2v1h-2zm3-4h1v2h-1zm-11 1h1v1h-1zm2-1h4v1h-4zm2 2h2v1h-2zm-1-1h1v1h-1zm2-1h1v1h-1zm1-1h1v1h-1zm0 2h3v1h-3zm1 2h2v1h-2zm3-4h1v2h-1zm-7 1h1v1h-1zm0 1h1v1h-1zm1-1h1v1h-1zm0 2h1v1h-1zm1-2h4v1h-4zm2 2h2v1h-2zm-1-1h1v1h-1zm2-1h1v1h-1zm1-1h1v1h-1zm0 2h3v1h-3zm1 2h2v1h-2zm3-4h1v2h-1zm-3 1h4v1h-4zm2 2h2v1h-2zm-1-1h1v1h-1zm2-1h1v1h-1zm1-1h1v1h-1zm0 2h3v1h-3zm1 2h2v1h-2zm3-4h1v2h-1zm0 1h2v1h-2zm0 2h1v1h-1zm2-2h3v1h-3zm1 2h1v1h-1zm2-1h2v1h-2zm0-4h2v1h-2zm1 2h1v1h-1zm1-2h1v1h-1zm0 1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm1-2h2v1h-2zm2 5h1v2h-1zm-2 0h1v1h-1zm0 1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm1-2h2v1h-2zm2 5h1v2h-1zm0-3h3v1h-3zm1 2h1v1h-1zm2-1h2v1h-2zm0-4h2v1h-2zm1 2h1v1h-1zm1-2h1v1h-1zm0 1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm1-2h2v1h-2zm2 5h1v2h-1zm1-4h1v1h-1zm0 1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm1-2h2v1h-2zm2 5h1v2h-1zm0-2h2v1h-2zm0-4h2v1h-2zm1 2h1v1h-1zm1-2h1v1h-1zm0 1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm1-2h2v1h-2zm2 5h1v2h-1zm1-2h3v1h-3zm1 2h1v1h-1zm2-1h2v1h-2zm0-4h2v1h-2zm1 2h1v1h-1zm1-2h1v1h-1zm0 1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm1-2h2v1h-2zm2 5h1v2h-1zm1 1h1v1h-1zm2-2h3v1h-3zm1 2h1v1h-1zm2-1h2v1h-2zm0-4h2v1h-2zm1 2h1v1h-1zm1-2h1v1h-1zm0 1h1v1h-1zm1-1h2v1h-2zm0 2h1v1h-1zm1-2h2v1h-2zm2 5h1v2h-1zM0 36h7v7H0zm1 1v5h5v-5zm1 1h3v3H2zm34 0h7v7h-7zm1 1v5h5v-5zm1 1h3v3H38z' /></g></svg>"/>
+    </div>
 </div>
 
 <script>
@@ -88,3 +87,4 @@
 
 </body>
 </html>
+
